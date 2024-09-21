@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div>
+      Dashboard
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
