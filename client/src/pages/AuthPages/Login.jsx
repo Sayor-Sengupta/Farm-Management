@@ -1,21 +1,15 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import sayorPic from '../assets/sayorPic.jpeg';
-import russian from '../assets/russian.jpg';
+
 
 function Login() {
   return (
-    <div className="bg-gradient-to-r from-gray-200 to-green-400 h-screen flex items-center justify-center">
-      <form className="w-full max-w-4xl mx-auto flex shadow-lg rounded-lg bg-white overflow-hidden">
+ 
+      <form className="w-screen h-screen flex items-center justify-center">
         {/* Sign In Form */}
         <div className="w-1/2 p-8 flex flex-col justify-center">
           <h1 className="text-3xl font-bold mb-6 text-gray-800">Sign In</h1>
-          
-      
-          
-          
-          <span className="text-center mb-4 text-gray-600">or use your email account</span>
-          
+         
           {/* Email Input */}
           <input
             type="email"
@@ -48,14 +42,14 @@ function Login() {
           <h1 className="text-3xl font-bold mb-6">Hey This is me the Mathew!</h1>
           <p className="mb-8 text-center">
             {/* Displaying the imported image */}
-            <img src={russian.jpg} alt="logo" className="w-70 h-80 mb-4" />
+            <img src="" alt="logo" className="w-70 h-80 mb-4" />
           </p>
           <button className="bg-white text-purple-600 py-3 rounded-lg w-full max-w-xs hover:bg-gray-100 transition duration-300">
             Sign Up
           </button>
         </div>
       </form>
-    </div>
+    
   );
 }
 
