@@ -9,6 +9,8 @@ const BuyPage = () => {
         <ItemCard />
         <ItemCard />
         <ItemCard />
+        <ItemCard />
+      
       
       
       </div>
