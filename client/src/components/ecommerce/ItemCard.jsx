@@ -15,7 +15,7 @@ const ItemCard = () => {
 
         <div className="p-4 w-1/2 border-l-2 border-gray-200">
           <h2 className="text-gray-700 text-lg uppercase font-medium">
-            Organic Tomatoes
+            JBL Headphones
           </h2>
           <h4 className="text-gray-500 text-xs uppercase font-medium">
             Fresh Farm Produce

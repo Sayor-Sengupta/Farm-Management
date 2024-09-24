@@ -11,10 +11,7 @@ const HomePage = () => {
       </div>
       <div className="divider divider-horizontal py-10  divider-success w-1"></div>
 
-      <div className="p-10 ">
-        {/* <Dashboard /> */}
-        <BuyPage />
-      </div>
+  
     </div>
   );
 };
