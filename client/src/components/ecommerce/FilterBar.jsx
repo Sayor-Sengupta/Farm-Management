@@ -40,7 +40,7 @@ const FilterBar = () => {
             <h1 className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
               2000 - 4999
             </h1>
-            <h1 className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
+            <h1 className="px-3 py-2 h-10 w-52  rounded-md flex flexc-row gap-2 hover:bg-cyan-200">
               5000- 10000
             </h1>
             <h1 className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
