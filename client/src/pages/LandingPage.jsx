@@ -1,5 +1,6 @@
+import { MinusSquare } from 'lucide-react'
 import React from 'react'
-import wheat3 from './assets/wheat3.jpg';
+
 
 
 const LandingPage = () => {
@@ -17,7 +18,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="relative">
-          <img className='w-screen h-screen object-cover' src={wheat3} alt="Wheat field" />
+          <img className='w-screen h-screen object-cover' src='./wheat4.jpg' alt="Wheat field" />
           <p className='absolute top-10 left-0 ml-4 text-2xl font-bold text-white bg-opacity-50 bg-black p-2'>
             //tagline//
           </p>

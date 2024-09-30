@@ -7,7 +7,7 @@ const ItemCard = () => {
       <div className="flex">
         <div className="p-4 w-1/2 text-center">
           <img
-            src="download.jpeg"
+            src="logosvg.svg"
             alt="Farm Product"
             className="h-64 mx-auto rounded-lg"
           />
@@ -15,7 +15,7 @@ const ItemCard = () => {
 
         <div className="p-4 w-1/2 border-l-2 border-gray-200">
           <h2 className="text-gray-700 text-lg uppercase font-medium">
-            JBL Headphones
+            Pesticide
           </h2>
           <h4 className="text-gray-500 text-xs uppercase font-medium">
             Fresh Farm Produce
@@ -28,10 +28,10 @@ const ItemCard = () => {
           <div className="mt-6">
             <div className="flex flex-row gap-8">
               <div className="h-8 w-20 border flex justify-center items-center  bg-orange-50 rounded-lg ">
-                <h1 className="text-green-700">#Tech</h1>
+                <h1 className="text-green-700">#pesticide</h1>
               </div>
               <div className="h-8 w-20 border flex justify-center items-center  bg-orange-50 rounded-lg ">
-                <h1 className="text-green-700">#sound</h1>
+                <h1 className="text-green-700">#crop</h1>
               </div>
             </div>
           </div>
