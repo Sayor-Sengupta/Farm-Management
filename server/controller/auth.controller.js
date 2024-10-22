@@ -14,8 +14,6 @@ let transporter = nodemailer.createTransport({
     pass: process.env.AUTH_PASS,
   },
 });
-console.log("Auth email:", process.env.AUTH_EMAIL);
-console.log("Auth password:", process.env.AUTH_PASS);
 
 transporter.verify((error, success) => {
   if (error) {
@@ -205,15 +203,13 @@ export const verifyOtp = async (req, res) => {
 export const resendOTP = async (req, res) => {
   try {
     let { userId, email } = req.body;
-    if(!userId || !email){
+    if (!userId || !email) {
       res.json({
-        message:"Empty otp "
-
-      })
-    }else{
-        await UserOpt.deleteMany({userId})   
-        sendOTP({_id:userId,email},res) 
-
+        message: "Empty otp ",
+      });
+    } else {
+      await UserOpt.deleteMany({ userId });
+      sendOTP({ _id: userId, email }, res);
     }
   } catch (error) {
     res.json({
@@ -221,4 +217,18 @@ export const resendOTP = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+export const changeRoleToBuyerAndSeller = async (req, res) => {
+try {
+  const loggedIn = req.user._id
+  const findUser = await User.findOneAndUpdate({_id:loggedIn},{Role:"BuyerAndSeller"},{new:true})
+  res.json({message:"Role changed successfully",data:findUser})
+  
+} catch (error) {
+  res.json({
+    status: "failed",
+    message: error.message,
+  });
+}
 };
