@@ -1,4 +1,5 @@
 import { Cart } from "../models/Cart.model.js";
+import { Order } from "../models/Order.model.js";
 import { Product } from "../models/product.model.js";
 import { roleIdentify } from "../utils/roleIdentify.js";
 import uploadOnCloudinary from "../utils/uploadToCloudinary.js";
@@ -62,6 +63,12 @@ export const filterProduct = async (req, res) => {
   try {
     const { category } = req.body || [];
     const search = await Product.find({ category: { $in: category } });
+    const productList = await Product.find().sort({ createdAt: -1 });
+
+    if (category.length === 0) {
+      return res.json({ message: "No filters selected", data: productList });
+
+    }
     res.json({ message: "Product list fetched successfully", data: search });
   } catch (error) {
     res.json({ error: error.message });
@@ -79,7 +86,8 @@ export const searchProduct = async (req, res) => {
       ],
     };
 
-    const products = await Product.find(searchOptions);
+    const products = await Product.find(searchOptions).sort({ createdAt: -1
+     });
 
     if (products.length === 0) {
       return res
@@ -99,7 +107,7 @@ export const addToCart = async (req, res) => {
     console.log(loggedInUser);
     console.log(typeof productId);
 
-    const product = await Cart.findOne({ productId });
+    const product = await Cart.findOne({ productId , userId:loggedInUser});
     if (product) {
       return res.json({ error: "Product already added to cart previously" });
     }
@@ -117,9 +125,9 @@ export const addToCart = async (req, res) => {
 export const allCartProduct = async (req, res) => {
   try {
     const loggedInUser = req.user;
-    const cart = await Cart.find({ userId: loggedInUser._id }).populate(
-      "productId"
-    );
+      const cart = await Cart.find({ userId: loggedInUser._id }).populate(
+        "productId"
+      );
     res.json({ message: "Cart fetched successfully", data: cart });
   } catch (error) {
     res.json({ error: error.message });
@@ -152,6 +160,42 @@ export const addOneToQuantity = async (req, res) => {
       return res.status(404).json({ error: "Product not found in cart" });
     }
     res.json({ message: "Quantity increased by one", data: cart });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+export const addOrderFromCart = async (req, res) => {
+  try {
+    const { userId } = req.body; 
+    
+    const cartItems = await Cart.find({ userId }).populate('productId');
+    
+    if (cartItems.length === 0) {
+      return res.status(400).json({ message: "No items in the cart to place an order" });
+    }
+
+    const orders = cartItems.map((item) => ({
+      userId: item.userId,
+      productId: item.productId._id,
+      quantity: item.quantity,
+      price: item.productId.price * item.quantity,
+    }));
+
+    await Order.insertMany(orders);
+
+    await Cart.deleteMany({ userId });
+
+    return res.status(201).json({ message: "Order placed successfully", orders });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    return res.status(500).json({ message: "An error occurred while placing the order" });
+  }
+};
+export const getOrders = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const orders = await Order.find({ userId }).populate('productId');
+    res.json({ message: "Orders fetched successfully", data: orders });
   } catch (error) {
     res.json({ error: error.message });
   }

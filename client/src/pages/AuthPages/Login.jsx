@@ -1,47 +1,99 @@
-import React from 'react';
-
+import React, { useState } from "react";
+import { GiPlainCircle, GiPlainSquare, GiPlantRoots } from "react-icons/gi";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { useAuthStore } from "@/State/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Login() {
+  const { authUser, setAuthUser } = useAuthStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/users/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      localStorage.setItem("authUser", JSON.stringify(res.data.loggedInUser));
+      if (res.status === 200) {
+        toast.success("Login Successful");
+        setAuthUser(res.data.loggedInUser);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error("Invalid Credentials");
+      }
+    }
+  };
   return (
- 
-      <form className="w-screen h-screen flex items-center justify-center">
-        <div className="w-1/2 p-8 flex flex-col justify-center">
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">Sign In</h1>
-         
-          <input
-            type="email"
-            placeholder="Email"
-            className="mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
-          
-          <input
-            type="password"
-            placeholder="Password"
-            className="mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
-          
-          <div className="text-right mb-4">
-            <a href="#" className="text-purple-600 hover:text-purple-800 text-sm">
-              Forgot Your Password?
-            </a>
+    <div className="bg-cSkin h-screen  overflow-hidden">
+      {" "}
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-row justify-center items-center h-full">
+          <div className="w-1/2 h-screen object-cover  bg-orange-100 flex justify-center items-center ">
+            {" "}
+            <img
+              src="./9008026.jpg"
+              alt="Wheat field"
+              className="  h-screen object-cover"
+            />
           </div>
-          
-          <button className="bg-green-600 text-white py-3 rounded-lg w-full hover:bg-purple-700 transition duration-300">
-            Sign In
-          </button>
-        </div>
 
-        <div className="w-1/2 bg-green-600 text-white p-8 flex flex-col justify-center items-center">
-          <h1 className="text-3xl font-bold mb-6">Hey This is me the Mathew!</h1>
-          <p className="mb-8 text-center">
-            <img src="" alt="logo" className="w-70 h-80 mb-4" />
-          </p>
-          <button className="bg-white text-purple-600 py-3 rounded-lg w-full max-w-xs hover:bg-gray-100 transition duration-300">
-            Sign Up
-          </button>
-        </div>
+          <div className="flex flex-col justify-center items-center w-1/2 ">
+            <h1 className="ml-3 mb-2 text-4xl font-serif font-bold text-center">
+              &nbsp; Manage Farm
+              <br />
+              <span className="inline-flex items-center">
+                Harvest
+                <GiPlainCircle className="mr-1 text-red-200" />
+                <GiPlainSquare className="mr-1 text-green-600" />
+                <GiPlantRoots className="mr-1 text-green-400" /> Success
+              </span>
+            </h1>
+            <div className="divider divider-accent px-24 mb-24"></div>
+            {/* 
+          <div className="pb-24 w-[500px] ">
+            <h1 className="text-semibold text-3xl text-center ">
+            Log In To Your Account
+            </h1>
+          </div> */}{" "}
+            <div className="w-1/2 flex flex-col justify-center gap-5 items-center">
+              <div className="p-1 rounded-3xl max-w-lg border-2 border-gray-300 focus-within:border-transparent focus-within:bg-gradient-to-r focus-within:from-rose-400 focus-within:via-fuchsia-500 focus-within:to-indigo-500">
+                <input
+                  className="p-1 text-center w-[500px] rounded-3xl placeholder-gray-600 bg-cSkin focus:outline-none"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  
+                  placeholder="Email Or Username"
+                />
+              </div>
+
+              <div className="p-1 rounded-3xl max-w-lg border-2 border-gray-300 focus-within:border-transparent focus-within:bg-gradient-to-r focus-within:from-rose-400 focus-within:via-fuchsia-500 focus-within:to-indigo-500">
+                <input
+                  className="p-1 text-center w-[500px] rounded-3xl placeholder-gray-600 bg-cSkin focus:outline-none"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                />
+              </div>
+
+              <button className="btn btn-ghost border h-10 border-cyan-500 w-40 mt-5 rounded-3xl bg-cyan-200">
+                <FaArrowAltCircleRight className="text-xl" />
+                Log In
+              </button>
+            </div>
+          </div>
+        </div>{" "}
       </form>
-    
+    </div>
   );
 }
 

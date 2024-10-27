@@ -12,7 +12,7 @@ let transporter = nodemailer.createTransport({
   auth: {
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASS,
-  },
+  }, 
 });
 
 transporter.verify((error, success) => {
@@ -155,7 +155,7 @@ const sendOTP = async ({ email, _id }, res) => {
 };
 export const verifyOtp = async (req, res) => {
   try {
-    let { userId, otp } = req.body;
+    const { userId, otp } = req.body;
     if (!userId || !otp) {
       res.json({
         message: "Empty otp ",
@@ -165,7 +165,7 @@ export const verifyOtp = async (req, res) => {
       console.log(userOtpVerify);
       if (userOtpVerify.length <= 0) {
         res.json({
-          message:
+          message: 
             "Account record doesnt exist or has been verified .please sign up or login",
         });
       } else {
@@ -183,11 +183,13 @@ export const verifyOtp = async (req, res) => {
               message: "Invalid OTP",
             });
           } else {
-            await User.updateOne({ _id: userId }, { verified: true });
+            await User.updateOne({ _id:  userId }, { verified: true });
             await UserOpt.deleteMany({ userId });
+            const loggedInUser = await User.findById({_id:userId}).select("-password");
             res.json({
               message: "OTP verified successfully",
               status: "verified",
+              loggedInUser
             });
           }
         }
@@ -220,15 +222,18 @@ export const resendOTP = async (req, res) => {
 };
 
 export const changeRoleToBuyerAndSeller = async (req, res) => {
-try {
-  const loggedIn = req.user._id
-  const findUser = await User.findOneAndUpdate({_id:loggedIn},{Role:"BuyerAndSeller"},{new:true})
-  res.json({message:"Role changed successfully",data:findUser})
-  
-} catch (error) {
-  res.json({
-    status: "failed",
-    message: error.message,
-  });
-}
+  try {
+    const loggedIn = req.user._id;
+    const findUser = await User.findOneAndUpdate(
+      { _id: loggedIn },
+      { Role: "BuyerAndSeller" },
+      { new: true }
+    );
+    res.json({ message: "Role changed successfully", data: findUser });
+  } catch (error) {
+    res.json({
+      status: "failed",
+      message: error.message,
+    });
+  }
 };

@@ -5,6 +5,8 @@ import { TiWeatherCloudy } from "react-icons/ti";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiBookOpen } from "react-icons/bi";
 import { MdOutlinePestControl } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 
 const Sidebar = () => {
   return (
@@ -27,11 +29,11 @@ const Sidebar = () => {
               <TiWeatherCloudy className="text-2xl " />
               <h1 className="font-bold">Weather Forcast</h1>
             </div>
-            <div className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
+            <Link to='/buypage' className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
               {" "}
               <FaCartShopping className="text-2xl" />
               <h1 className="font-bold">Buy and sell goods</h1>
-            </div>
+            </Link>
             <div className="px-3 py-2 h-10 w-52  rounded-md flex flex-row gap-2 hover:bg-cyan-200">
               {" "}
               <BiBookOpen className="text-2xl " />
