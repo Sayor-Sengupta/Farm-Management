@@ -12,7 +12,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
-          DEFAULT: "hsl(var(--card))",		
+          DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
         popover: {
@@ -57,5 +57,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),require('daisyui'),],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("daisyui"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 };

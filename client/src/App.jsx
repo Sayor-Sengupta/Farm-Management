@@ -1,4 +1,3 @@
-
 import { Car } from 'lucide-react'
 import './App.css'
 
@@ -8,33 +7,42 @@ import BuyPage from './pages/Ecommerrce/BuyPage'
 import Cart from './pages/Ecommerrce/Cart'
 import SellPage from './pages/Ecommerrce/SellPage'
 import HomePage from './pages/HomePage'
-// import HomePage from './pages/HomePage
 import LandingPage from './pages/LandingPage'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './State/useAuth'
 import Order from './pages/Ecommerrce/Order'
+import CropPrediction from './pages/CropPrediction'
+import MessageSkeleton from './components/ecommerce/Skeleton'
 
-
+// Protected route component
+const ProtectedRoute = ({ authUser, children }) => {
+  return authUser ? children : <Navigate to="/login" />;
+};
 
 function App() {
-  const {authUser} = useAuthStore()
-  console.log(authUser)
-   return (
-   <>
-      <Routes>
-        <Route path='/login' element={authUser? <Navigate to='/' /> : <Login/>}/>
-        <Route path='/signup' element={authUser? <Navigate to='/' /> : <Signup/>}/>
-        {authUser && <Route path='/' element={<HomePage/>}/>}
+  const { authUser } = useAuthStore();
+  console.log(authUser);
 
-        <Route path='/buyPage' element={<BuyPage/>}/>
-        <Route path='/sellPage' element={<SellPage/>}/>
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/order' element={<Order/>}/>
+  return (
+    <>
+      <Routes>
+        {/* Public routes */}
+        <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
+        <Route path='/signup' element={authUser ? <Navigate to='/' /> : <Signup />} />
+        
+        {/* Protected routes */}
+        <Route path='/' element={<ProtectedRoute authUser={authUser}><HomePage /></ProtectedRoute>} />
+        <Route path='/buyPage' element={<ProtectedRoute authUser={authUser}><BuyPage /></ProtectedRoute>} />
+        <Route path='/sellPage' element={<ProtectedRoute authUser={authUser}><SellPage /></ProtectedRoute>} />
+        <Route path='/cart' element={<ProtectedRoute authUser={authUser}><Cart /></ProtectedRoute>} />
+        <Route path='/order' element={<ProtectedRoute authUser={authUser}><Order /></ProtectedRoute>} />
+        <Route path='/cropPredict' element={<ProtectedRoute authUser={authUser}><CropPrediction /></ProtectedRoute>} />
+        <Route path='/ms' element={<MessageSkeleton />} />
       </Routes>
-      <Toaster/>
-   </>
+      <Toaster />
+    </>
   )
 }
 
-export default App
+export default App;

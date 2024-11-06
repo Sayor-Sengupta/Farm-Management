@@ -28,7 +28,7 @@ const EcommerceSideBar = () => {
               <h1 className="font-bold">Buy Page</h1>
             </Link>
           </div>
-          {authUser.Role === "BuyerAndSeller" ? (
+          {authUser.Role !== "BuyerAndSelle" ? (
             <Link
               to="/sellpage"
               className="px-3 py-2 h-10 flex flex-row w-44 gap-2 rounded-md hover:bg-cyan-200"

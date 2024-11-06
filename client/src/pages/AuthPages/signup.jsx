@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useAuthStore } from "@/State/useAuth";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function Signup() {
   const [fullName, setFullName] = useState("");
@@ -20,43 +21,48 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [userId, setUserId] = useState(""); 
-  const {authUser, setAuthUser} = useAuthStore()
+  const [userId, setUserId] = useState("");
+  const { authUser, setAuthUser } = useAuthStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/users/signUp", {
-        fullName,
-        userName,
-        email,
-        password,
-        confirmPassword,
-      },{withCredentials:true});
+      const res = await axios.post(
+        "http://localhost:3000/api/users/signUp",
+        {
+          fullName,
+          userName,
+          email,
+          password,
+          confirmPassword,
+        },
+        { withCredentials: true }
+      );
       console.log("res.data", res.data);
-     
-    
+
       setUserId(res.data.data.userId);
-      setIsOtpSent(true); 
+      setIsOtpSent(true);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error);
     }
   };
 
   const handleOtpSubmit = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/api/users/verify", {
-        otp,
-        userId
-      },{withCredentials:true});
-    
+      const res = await axios.post(
+        "http://localhost:3000/api/users/verify",
+        {
+          otp,
+          userId,
+        },
+        { withCredentials: true }
+      );
+
       console.log("res.data", res.data);
       if (res.data.status === "verified") {
-
         console.log("Account verified");
-        toast.success("Account Verified")
+        toast.success("Account Verified");
         setAuthUser(res.data.loggedInUser);
-        
-
       }
     } catch (error) {
       console.log(error);
@@ -139,12 +145,14 @@ function Signup() {
                   <FaArrowAltCircleRight className="text-xl" />
                   Create Account
                 </button>
+                <Link to="/login">
+                  <h1 className="hover:text-gray-500 font-semibold text-sm">Already have an account?</h1>
+                </Link>
               </div>
             </div>
           </div>
         </form>
 
-        
         {isOtpSent && (
           <Dialog open={isOtpSent}>
             <DialogContent>
@@ -157,12 +165,15 @@ function Signup() {
               <input
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                placeholder="OTP" className="bg-white text-black"
+                placeholder="OTP"
+                className="bg-white text-black"
               />
-              <button className="btn"onClick={handleOtpSubmit}>Verify OTP</button>
+              <button className="btn" onClick={handleOtpSubmit}>
+                Verify OTP
+              </button>
             </DialogContent>
           </Dialog>
-        )} 
+        )}
       </div>
     </>
   );

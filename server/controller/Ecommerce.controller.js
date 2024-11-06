@@ -8,10 +8,10 @@ export const uploadProduct = async (req, res) => {
   try {
     const loggedInUser = req.user;
     console.log(loggedInUser.Role);
-    const isBuyerSeller = await roleIdentify(loggedInUser._id);
-    if (!isBuyerSeller) {
-      return res.status(401).json({ error: "Unauthorized - Invalid user role" });
-    }
+    // const isBuyerSeller = await roleIdentify(loggedInUser._id);
+    // if (!isBuyerSeller) {
+    //   return res.status(401).json({ error: "Unauthorized - Invalid user role" });
+    // }
 
     console.log("files", req.file);
     console.log("body", req.body);

@@ -1,6 +1,7 @@
 import EcommerceSideBar from "@/components/ecommerce/EcommerceSideBar";
 import FilterBar from "@/components/ecommerce/FilterBar";
 import ItemCard from "@/components/ecommerce/ItemCard";
+import MessageSkeleton from "@/components/ecommerce/Skeleton";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -8,11 +9,12 @@ import toast from "react-hot-toast";
 const BuyPage = () => {
   const [productList, setProductList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({}); 
-  const [visible, setVisible] = useState(false);
+  const [filters, setFilters] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // Fetch products based on search query
   const fetchProducts = async (query = "") => {
+    setLoading(true); // Set loading to true
     try {
       const res = await axios.get(
         `http://localhost:3000/api/Ecom/search?search=${query}`,
@@ -20,24 +22,27 @@ const BuyPage = () => {
       );
       console.log(res.data);
       setProductList(res.data.data);
-      setVisible
     } catch (error) {
       console.error("Error fetching products", error);
+    } finally {
+      setLoading(false); // Set loading to false after request
     }
   };
 
-  // Fetch products based on selected filters (using POST)
   const applyFilters = async (appliedFilters) => {
+    setLoading(true); // Set loading to true
     try {
       const res = await axios.post(
         "http://localhost:3000/api/Ecom/filter",
-        { category: appliedFilters.category }, // Send the category as the body
+        { category: appliedFilters.category },
         { withCredentials: true }
       );
       console.log(res.data);
       setProductList(res.data.data);
     } catch (error) {
       console.error("Error applying filters", error);
+    } finally {
+      setLoading(false); // Set loading to false after request
     }
   };
 
@@ -61,13 +66,16 @@ const BuyPage = () => {
   // Handle filter changes from the FilterBar
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    applyFilters(newFilters); // Fetch products with the updated filters
+    applyFilters(newFilters);
   };
+
+  // Skeleton array for loading placeholders
+  const skeletonCards = Array(8).fill(null); // Customize the number of skeletons to match layout
 
   return (
     <div className="bg-cSkin p-5 flex flex-row h-screen">
       <EcommerceSideBar />
-      <div className="divider divider-horizontal divider-success py-10  w-1"></div>
+      <div className="divider divider-horizontal divider-success py-10 w-1"></div>
       <div className="h-screen flex flex-col justify-center items-center gap-10">
         <div className="flex flex-col justify-between">
           <label className="input input-bordered bg-white border-black flex items-center gap-4">
@@ -95,7 +103,15 @@ const BuyPage = () => {
         </div>
         <div className="flex flex-row gap-5 justify-center">
           <div className="grid grid-cols-2 gap-16 mr-30 overflow-y-auto h-[calc(100vh-200px)] overflow-x-hidden">
-            {productList.length > 0 ? (
+            {loading ? (
+              skeletonCards.map((_, index) => (
+                <div className="overflow-hidden">
+                  {" "}
+                  <MessageSkeleton key={index} />{" "}
+                </div>
+                // Display skeleton for each card
+              ))
+            ) : productList.length > 0 ? (
               productList.map((product, index) => (
                 <ItemCard
                   key={index}
@@ -108,11 +124,13 @@ const BuyPage = () => {
                 />
               ))
             ) : (
-              <h1 className="text-center w-[450px] text-2xl font-bold">No Products Found</h1>
+              <h1 className="text-center w-[450px] text-2xl font-bold">
+                No Products Found
+              </h1>
             )}
           </div>
           <div>
-            <FilterBar onFilterChange={handleFilterChange} /> {/* Pass the filter handler */}
+            <FilterBar onFilterChange={handleFilterChange} />
           </div>
         </div>
       </div>

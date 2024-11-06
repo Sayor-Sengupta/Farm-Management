@@ -4,6 +4,7 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useAuthStore } from "@/State/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function Login() {
   const { authUser, setAuthUser } = useAuthStore();
@@ -89,6 +90,9 @@ function Login() {
                 <FaArrowAltCircleRight className="text-xl" />
                 Log In
               </button>
+              <Link to="/signup">
+                  <h1 className="hover:text-gray-500 font-semibold text-sm">Dont have a account Sign up</h1>
+                </Link>
             </div>
           </div>
         </div>{" "}

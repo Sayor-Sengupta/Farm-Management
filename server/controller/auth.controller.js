@@ -12,7 +12,7 @@ let transporter = nodemailer.createTransport({
   auth: {
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASS,
-  }, 
+  },
 });
 
 transporter.verify((error, success) => {
@@ -33,8 +33,11 @@ export const signIn = async (req, res) => {
     }
 
     const user = await User.findOne({ userName });
+    const email1 = await User.findOne({ email });
 
     if (user) return res.status(400).json({ error: "UserName already exists" });
+    if (email1)
+      return res.status(400).json({ error: "Email already exists" });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -45,6 +48,7 @@ export const signIn = async (req, res) => {
       password: hashedPassword,
       email,
       verified: false,
+      Role: "BuyerAndSeller",
     });
 
     console.log(newUser);
@@ -165,7 +169,7 @@ export const verifyOtp = async (req, res) => {
       console.log(userOtpVerify);
       if (userOtpVerify.length <= 0) {
         res.json({
-          message: 
+          message:
             "Account record doesnt exist or has been verified .please sign up or login",
         });
       } else {
@@ -183,13 +187,15 @@ export const verifyOtp = async (req, res) => {
               message: "Invalid OTP",
             });
           } else {
-            await User.updateOne({ _id:  userId }, { verified: true });
+            await User.updateOne({ _id: userId }, { verified: true });
             await UserOpt.deleteMany({ userId });
-            const loggedInUser = await User.findById({_id:userId}).select("-password");
+            const loggedInUser = await User.findById({ _id: userId }).select(
+              "-password"
+            );
             res.json({
               message: "OTP verified successfully",
               status: "verified",
-              loggedInUser
+              loggedInUser,
             });
           }
         }
