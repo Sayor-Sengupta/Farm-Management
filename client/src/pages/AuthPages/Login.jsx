@@ -40,7 +40,7 @@ function Login() {
           <div className="w-1/2 h-screen object-cover  bg-orange-100 flex justify-center items-center ">
             {" "}
             <img
-              src="./9008026.jpg"
+              src="./image.jpg"
               alt="Wheat field"
               className="  h-screen object-cover"
             />

@@ -41,7 +41,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-cSkin h-screen p-5 w-screen flex flex-row overflow-y-hidden">
+    <div className="bg-cSkin h-screen  w-screen flex flex-row overflow-y-hidden">
       <EcommerceSideBar />
       <div className="divider divider-horizontal py-10 pr-5 divider-success w-1"></div>
       <div className="flex flex-row gap-9 justify-between mt-10">

@@ -5,4 +5,4 @@ const cartSchema = new mongoose.Schema({
     productId: {type: mongoose.Schema.Types.ObjectId, ref: "Product"},
     quantity: Number,
 },{timeseries: true});
-export const Cart = mongoose.model("Cart", cartSchema);
+export const Cart = mongoose.model("Cart", cartSchema); 

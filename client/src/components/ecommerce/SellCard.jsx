@@ -14,7 +14,7 @@ const SellCard = () => {
 
   // Categories for the select input
   const categories = [
-    { value: "fruit", label: "Fruit" },
+    { value: "fruits", label: "Fruit and Vegetables" },
     { value: "crops", label: "Crops" },
     { value: "machineries", label: "Machineries" },
     { value: "others", label: "Others" },
@@ -38,7 +38,6 @@ const SellCard = () => {
     productData.append("name", formData.name);
     productData.append("price", formData.price);
     productData.append("category", formData.category);
-    productData.append("description", formData.description);
     productData.append("image", image);
 
     try {
@@ -89,7 +88,7 @@ const SellCard = () => {
             required
           />
         </div>
-        <div className="h-[1px] bg-gray-500 rounded-lg mx-5 my-2"></div>
+        <div className="h-[1px] bg-black rounded-lg mx-5 my-2"></div>
 
         {/* Category - Changed to Select */}
         <div className="flex flex-row gap-5 justify-between w-[800px] items-center ml-5 ">
@@ -117,7 +116,7 @@ const SellCard = () => {
             ))}
           </select>
         </div>
-        <div className="h-[1px] bg-gray-500 rounded-lg mx-5 my-2"></div>
+        <div className="h-[0.5px] bg-black rounded-lg mx-5 my-2"></div>
 
         {/* Price */}
         <div className="flex flex-row gap-5 justify-between w-[800px] items-center ml-5 ">
@@ -136,10 +135,10 @@ const SellCard = () => {
             required
           />
         </div>
-        <div className="h-[1px] bg-gray-500 rounded-lg mx-5 my-2"></div>
+        {/* <div className="h-[1px] bg-gray-500 rounded-lg mx-5 my-2"></div> */}
 
         {/* Description */}
-        <div className="flex flex-row gap-2 justify-between w-[800px] ml-5">
+        {/* <div className="flex flex-row gap-2 justify-between w-[800px] ml-5">
           <div className="flex flex-col">
             <h1 className="text-lg font-bold">
               Description <br />
@@ -156,7 +155,7 @@ const SellCard = () => {
             placeholder="Type Here"
             required
           ></textarea>
-        </div>
+        </div> */}
         <div className="h-[1px] bg-gray-600 rounded-lg mx-5 my-2"></div>
 
         {/* Image */}
@@ -179,7 +178,7 @@ const SellCard = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-center w-[800px] ml-5 mt-5">
+        <div className="flex  w-[800px] ml-5 mt-5">
           <button
             type="submit"
             className="btn bg-cyan-500 text-white"

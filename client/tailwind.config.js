@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         ...defaultTheme.colors,
-        cSkin: "#f9faf5",
+        cSkin: "#F3E6D5FF",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

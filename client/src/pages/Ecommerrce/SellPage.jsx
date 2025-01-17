@@ -5,7 +5,7 @@ import React from "react";
 const SellPage = () => {
   return (
     <>
-      <div className="bg-cSkin h-screen flex flex-row  p-5 ">
+      <div className="bg-cSkin h-screen flex flex-row   ">
         <EcommerceSideBar />
 
         <div className="divider divider-horizontal py-10  divider-success w-1"></div>

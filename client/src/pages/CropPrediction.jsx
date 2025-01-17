@@ -1,6 +1,12 @@
-import React, { useState } from "react";
-import axios from "axios";
 import Sidebar from "@/components/Side Bar/Sidebar";
+import axios from "axios";
+import { useState } from "react";
+import { PiFarm, PiTrainRegionalFill } from "react-icons/pi";
+import { WiHumidity } from "react-icons/wi";
+import { cn } from "@/lib/utils";
+import AnimatedShinyText from "../components/ui/animated-shiny-text";
+
+import { FaCloudMoonRain, FaTemperatureArrowUp } from "react-icons/fa6";
 
 const CropPrediction = () => {
   const [region, setRegion] = useState("");
@@ -12,11 +18,9 @@ const CropPrediction = () => {
   const [prediction, setPrediction] = useState([]);
   const [error, setError] = useState("");
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
     if (!soil || !humidity || !temperature || !rainfall) {
       setError("All fields are required.");
       return;
@@ -32,7 +36,7 @@ const CropPrediction = () => {
           humidity,
           temperature,
           rainfall,
-          region,
+          region:"1",
         }
       );
       console.log(response.data);
@@ -40,6 +44,7 @@ const CropPrediction = () => {
       setPrediction(response.data.predictions);
     } catch (error) {
       setError("Error predicting crop. Please try again.");
+      console.log(error.message);
     } finally {
       setLoading(false);
     }
@@ -54,9 +59,17 @@ const CropPrediction = () => {
 
       <div className="flex flex-row gap-10 px-40  items-center justify-between">
         {" "}
-        <form onSubmit={handleSubmit} className="w-1/2">
-          <div className="mb-4">
-            <label className="block text-gray-700 pb-1">Region</label>
+        <form
+          onSubmit={handleSubmit}
+          className="w-1/2 bg-green-200 p-10 border border-black rounded-lg"
+        >
+          {/* <div className="mb-4">
+            <div className="flex flex-row">
+              {" "}
+              <PiTrainRegionalFill className="mt-1.5" />
+              <label className="block text-gray-700 pb-1">Region</label>
+            </div>
+
             <input
               type="text"
               value={region}
@@ -64,48 +77,67 @@ const CropPrediction = () => {
               className="w-[300px] p-2 bg-white border border-gray-300 rounded"
               required
             />
-          </div>
+          </div> */}
 
           <div className="mb-4">
-            <label className="block text-gray-700 p-1">Soil Type</label>
+            <div className="flex flex-row ">
+              {" "}
+              <PiFarm className="mt-2.5" />
+              <label className="block text-gray-700 p-1">Soil Type</label>
+            </div>
+
             <input
               type="text"
               value={soil}
               onChange={(e) => setSoil(e.target.value)}
-              className="w-[300px] p-2 bg-white border border-gray-300 rounded"
+              className="w-[300px] p-2 bg-white border  border-gray-900 rounded"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 p-1">Humidity (%)</label>
+            <div className="flex flex-row">
+              <WiHumidity className="mt-2" />{" "}
+              <label className="block text-gray-700 p-1">Humidity (%)</label>
+            </div>
+
             <input
               type="number"
               value={humidity}
               onChange={(e) => setHumidity(e.target.value)}
-              className="w-[300px] p-2 bg-white border border-gray-300 rounded"
+              className="w-[300px] p-2 bg-white border border-gray-900 rounded"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 p-1">Temperature (°C)</label>
+            <div className="flex flex-row">
+              <FaTemperatureArrowUp className="mt-2" />{" "}
+              <label className="block text-gray-700 p-1">
+                Temperature (°C)
+              </label>
+            </div>
             <input
               type="number"
               value={temperature}
               onChange={(e) => setTemperature(e.target.value)}
-              className="w-[300px] p-2 border bg-white border-gray-300 rounded"
+              className="w-[300px] p-2 border bg-white border-gray-900 rounded"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 p-1">Rainfall </label>
+            <div className="flex flex-row">
+              {" "}
+              <FaCloudMoonRain className="mt-2" />
+              <label className="block text-gray-700 p-1">Rainfall </label>
+            </div>
+
             <input
               type="text"
               value={rainfall}
               onChange={(e) => setRainfall(e.target.value)}
-              className="w-[300px] p-2 border bg-white border-gray-300 rounded"
+              className="w-[300px] p-2 border bg-white border-gray-900 rounded"
               required
             />
           </div>
@@ -125,8 +157,10 @@ const CropPrediction = () => {
         <div>
           {" "}
           {prediction.length > 0 && !loading ? (
-            <div className="mt-6 p-4 bg-green-50 rounded-md border border-black ">
-              <h3 className="text-xl font-semibold text-center">Recommended Crops:</h3>
+            <div className="mt-6 p-4 mb-5 bg-green-200 rounded-md border  border-black ">
+              <h3 className="text-xl font-semibold text-center">
+                Recommended Crops:
+              </h3>
               {prediction.map((crop, index) => (
                 <div key={index} className="mt-2">
                   <p className="text-lg font-semibold">{crop.crop}</p>
@@ -137,8 +171,10 @@ const CropPrediction = () => {
           ) : (
             <>
               {" "}
-              <div className="mt-6 p-4 bg-green-50 rounded-md border h-[470px] w-[460px] border-black ">
-                <h3 className="text-xl font-semibold text-center">Recommended Crops</h3>
+              <div className="mt-1 p-4  bg-green-200 rounded-md border h-[490px] w-[460px] border-black ">
+                <h3 className="text-xl font-semibold text-center">
+                  Recommended Crops
+                </h3>
               </div>
             </>
           )}

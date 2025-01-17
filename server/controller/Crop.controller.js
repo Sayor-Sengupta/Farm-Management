@@ -49,7 +49,7 @@ export const cropPredict = async (req, res) => {
 
       // Send the cleaned response with crop recommendations
       res.json({ predictions: cropRecommendations });
-  } else {
+    } else {
       res.status(500).json({ message: "No candidates found in the response." });
     }
   } catch (error) {
@@ -60,5 +60,52 @@ export const cropPredict = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error predicting crop", error: error.message });
+}
+};
+
+export const yeildAnalysis = async (req, res) => {
+  const { prompt } = req.body;
+
+  // Formulate the question for the API
+  const question = `
+    You are an agricultural expert specializing in yield analysis. Only answer questions related to analyzing farm yields, including:
+    - Crop yield predictions
+    - Soil conditions
+    - Water requirements
+    - Weather impact
+    - Farming practices
+    - Pest control
+    - Productivity improvements.
+    Do not answer questions outside the scope of yield analysis.
+    Here is the question: ${prompt}
+  `;
+
+  try {
+    // Make API call to Gemini
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      { contents: [{ parts: [{ text: question }] }] },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    const generatedText = response.data.candidates?.[0]?.content?.parts[0]?.text.trim();
+
+    if (!generatedText) {
+      return res.status(500).json({ message: "No analysis available." });
+    }
+
+    // Clean the text to remove markdown-like artifacts
+    const cleanedText = generatedText
+      .replace(/\*\*/g, "") // Remove double asterisks (bold)
+      .replace(/\*/g, "")   // Remove single asterisks (bullets or emphasis)
+      .trim();              // Remove any extra whitespace
+
+    // Send the cleaned response back to the client
+    console.log("Cleaned text:", cleanedText);
+    res.status(200).json({ analysis: cleanedText });
+    
+  } catch (error) {
+    console.error("Yield analysis error:", error.message);
+    res.status(500).json({ message: "Failed to fetch yield analysis", error: error.message });
   }
 };

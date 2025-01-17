@@ -17,7 +17,7 @@ const BuyPage = () => {
     setLoading(true); // Set loading to true
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/Ecom/search?search=${query}`,
+        ` http://localhost:3000/api/Ecom/search?search=${query}`,
         { withCredentials: true }
       );
       console.log(res.data);
@@ -73,11 +73,11 @@ const BuyPage = () => {
   const skeletonCards = Array(8).fill(null); // Customize the number of skeletons to match layout
 
   return (
-    <div className="bg-cSkin p-5 flex flex-row h-screen">
+    <div className="bg-cSkin  flex flex-row h-screen overflow-hidden">
       <EcommerceSideBar />
-      <div className="divider divider-horizontal divider-success py-10 w-1"></div>
-      <div className="h-screen flex flex-col justify-center items-center gap-10">
-        <div className="flex flex-col justify-between">
+      <div className="divider divider-horizontal divider-success py-10 w-1  "></div>
+      <div className="h-screen flex flex-col justify-center items-center gap-5 ">
+        <div className="flex flex-col  items-center w-[500px] pr-64">
           <label className="input input-bordered bg-white border-black flex items-center gap-4">
             <input
               type="text"
@@ -100,9 +100,10 @@ const BuyPage = () => {
               />
             </svg>
           </label>
+          
         </div>
-        <div className="flex flex-row gap-5 justify-center">
-          <div className="grid grid-cols-2 gap-16 mr-30 overflow-y-auto h-[calc(100vh-200px)] overflow-x-hidden">
+        <div className="flex flex-row gap-5 justify-center scrollbar scrollbar-thumb-rose-400 scrollbar-track-red-600 ">
+          <div className="grid grid-cols-3 gap-1  w-[1000px]  mr-30 overflow-y-auto h-[calc(100vh-200px)] overflow-x-hidden scrollbar-thin scrollbar-thumb-rose-400 scrollbar-track-red-600">
             {loading ? (
               skeletonCards.map((_, index) => (
                 <div className="overflow-hidden">
@@ -117,7 +118,6 @@ const BuyPage = () => {
                   key={index}
                   name={product.name}
                   category={product.category}
-                  description={product.description}
                   Price={product.price}
                   image={product.image}
                   id={product._id}
@@ -130,7 +130,8 @@ const BuyPage = () => {
             )}
           </div>
           <div>
-            <FilterBar onFilterChange={handleFilterChange} />
+            {/* <FilterBar onFilterChange={handleFilterChange} /> */}
+            <FilterBar onFilterChange={handleFilterChange}  />
           </div>
         </div>
       </div>

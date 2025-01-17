@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const ItemCard = ({ id, name, category, description, Price, image }) => {
+const ItemCard = ({ id, name, Price, image, originalPrice }) => {
   // Add to cart function
   const [visible, setVisible] = useState(true);
+
   const addToCart = async () => {
     try {
       const res = await axios.post(
@@ -16,7 +18,7 @@ const ItemCard = ({ id, name, category, description, Price, image }) => {
       );
       // Notify success
       toast.success("Product added to cart!");
-      setVisible(false)
+      setVisible(false);
     } catch (error) {
       console.error("Error adding product to cart", error);
       toast.error("Failed to add product to cart.");
@@ -24,31 +26,61 @@ const ItemCard = ({ id, name, category, description, Price, image }) => {
   };
 
   return (
-    <div className="w-[450px] h-72 bg-white shadow-lg hover:shadow-xl hover:bg-gray-200 transition-all rounded-lg mx-auto p-4">
-      <div className="flex">
-        <div className="w-1/2 p-2 flex items-center justify-center">
-          <img
-            src={image}
-            alt="Farm Product"
-            className="h-60 mx-auto rounded-lg"
-          />
+    <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md h-[450px] hover:bg-gray-100">
+      {/* Image Section */}
+      <a
+        className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
+        href="#"
+      >
+        <LazyLoadImage
+          loading="lazy"
+          src={image}
+          alt="product image"
+          className="object-cover"
+        />
+      </a>
+
+      {/* Details Section */}
+      <div className="mt-4 px-5 pb-5">
+        <a href="#">
+          <h5 className="text-xl tracking-tight text-slate-900">{name}</h5>
+        </a>
+        <div className="mt-2 mb-5 flex items-center justify-between">
+          <p>
+            <span className="text-3xl font-bold text-slate-900">${Price}</span>
+            {originalPrice && (
+              <span className="text-sm text-slate-900 line-through ml-2">
+                Rs.{originalPrice}
+              </span>
+            )}
+          </p>
         </div>
 
-        <div className="p-4 w-1/2 border-l-2 border-gray-200">
-          <h2 className="text-gray-700 text-lg uppercase font-medium">{name}</h2>
-          <h4 className="text-gray-500 text-xs uppercase font-medium">{category}</h4>
-          <h1 className="text-gray-700 text-2xl font-light mt-2">{Price}</h1>
-          <p className="text-gray-500 text-sm leading-relaxed mt-4">{description}</p>
-          <div>
-          {visible ? ( 
-              <button onClick={addToCart} className="btn btn-primary mt-10">
-                Add to Cart
-              </button>
-            ) : (
-              <p className="text-green-600 mt-10">Added to Cart</p> // Message after adding to cart
-            )}
-          </div>
-        </div>
+        {/* Add to Cart Button */}
+        {visible ? (
+          <button
+            onClick={addToCart}
+            className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="mr-2 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            Add to cart
+          </button>
+        ) : (
+          <p className=" h-10 text-center absolute pt-2 rounded-sm p-1 bg-green-300 w-28">Added to Cart</p>
+        )}
       </div>
     </div>
   );

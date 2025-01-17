@@ -14,6 +14,9 @@ import { useAuthStore } from './State/useAuth'
 import Order from './pages/Ecommerrce/Order'
 import CropPrediction from './pages/CropPrediction'
 import MessageSkeleton from './components/ecommerce/Skeleton'
+import WeatherPredict from './pages/WeatherPredict'
+import YieldAnalysis from './pages/YieldAnalysis'
+import SoldItems from './pages/Ecommerrce/SoldItems'
 
 // Protected route component
 const ProtectedRoute = ({ authUser, children }) => {
@@ -35,9 +38,11 @@ function App() {
         <Route path='/' element={<ProtectedRoute authUser={authUser}><HomePage /></ProtectedRoute>} />
         <Route path='/buyPage' element={<ProtectedRoute authUser={authUser}><BuyPage /></ProtectedRoute>} />
         <Route path='/sellPage' element={<ProtectedRoute authUser={authUser}><SellPage /></ProtectedRoute>} />
+        <Route path='/sold' element={<ProtectedRoute authUser={authUser}><SoldItems /></ProtectedRoute>} />
         <Route path='/cart' element={<ProtectedRoute authUser={authUser}><Cart /></ProtectedRoute>} />
         <Route path='/order' element={<ProtectedRoute authUser={authUser}><Order /></ProtectedRoute>} />
         <Route path='/cropPredict' element={<ProtectedRoute authUser={authUser}><CropPrediction /></ProtectedRoute>} />
+      <Route path='/analyze' element={<ProtectedRoute authUser={authUser}><YieldAnalysis /></ProtectedRoute>} />
         <Route path='/ms' element={<MessageSkeleton />} />
       </Routes>
       <Toaster />

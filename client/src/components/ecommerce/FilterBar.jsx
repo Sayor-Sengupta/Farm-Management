@@ -20,7 +20,7 @@ const FilterBar = ({ onFilterChange }) => {
           <h1 className="text-2xl font-semibold">Categories</h1>
           <div className="ml-5 mt-3 ">
             <h1
-              className={`px-3 py-2 h-10 w-52 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
+              className={`px-3 py-2 h-10 w-40 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "all" ? "bg-cyan-300" : ""
               }`}
               onClick={() => handleCategoryClick("")}
@@ -28,15 +28,15 @@ const FilterBar = ({ onFilterChange }) => {
               All
             </h1>
             <h1
-              className={`px-3 py-2 h-10 w-52 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
+              className={`px-3 py-2 h-10 w-44 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "fruits & vegetables" ? "bg-cyan-300" : ""
               }`}
-              onClick={() => handleCategoryClick("fruit")}
+              onClick={() => handleCategoryClick("fruits & vegetables")}
             >
               Fruits & Vegetables
             </h1>
             <h1
-              className={`px-3 py-2 h-10 w-52 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
+              className={`px-3 py-2 h-10 w-40 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "machineries" ? "bg-cyan-300" : ""
               }`}
               onClick={() => handleCategoryClick("machineries")}
@@ -44,7 +44,7 @@ const FilterBar = ({ onFilterChange }) => {
               Machineries
             </h1>
             <h1
-              className={`px-3 py-2 h-10 w-52 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
+              className={`px-3 py-2 h-10 w-40 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "crops" ? "bg-cyan-300" : ""
               }`}
               onClick={() => handleCategoryClick("crops")}
@@ -52,7 +52,7 @@ const FilterBar = ({ onFilterChange }) => {
               Crops
             </h1>
             <h1
-              className={`px-3 py-2 h-10 w-52 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
+              className={`px-3 py-2 h-10 w-40 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "others" ? "bg-cyan-300" : ""
               }`}
               onClick={() => handleCategoryClick("others")}
