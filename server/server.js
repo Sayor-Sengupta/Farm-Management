@@ -6,7 +6,9 @@ import  connectMongoDb  from "./utils/connectMongoDb.js";
 import authRoutes from './routes/auth.routes.js'
 import ecommerceRoutes from './routes/product.routes.js'
 import cropRouter from './routes/crop.routes.js'
+import soilRouter from "./routes/soil.routes.js";  
 const app = express();
+
 dotenv.config();
 const PORT = process.env.PORT || 3000   ; 
 
@@ -17,7 +19,7 @@ app.use(express.json());
 app.use('/api/users',authRoutes)
 app.use('/api/Ecom',ecommerceRoutes)
 app.use('/api/crop',cropRouter)
-
+app.use("/api/soil", soilRouter); 
 
 app.listen(PORT, () => {
   connectMongoDb()
