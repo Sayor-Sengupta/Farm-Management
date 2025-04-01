@@ -4,12 +4,12 @@ import axios from "axios";
 import { Text } from "react-font";
 
 const HomePage = () => {
-  const { authUser, setAuthUser } = useAuthStore();
+  const { setAuthUser } = useAuthStore();
   const logout = async () => {
     await axios.post(
       "http://localhost:3000/api/users/logout",
       {},
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     localStorage.removeItem("chat-user");
@@ -34,11 +34,14 @@ const HomePage = () => {
               className="h-16"
             />
             <Text family="Space Grotesk" style={{ fontSize: "80px" }}>
-              Nurturing 
+              Nurturing
             </Text>
-            <Text family="Space Grotesk" weight={700}
-                 style={{ fontSize: "80px" }}>
-               Your
+            <Text
+              family="Space Grotesk"
+              weight={700}
+              style={{ fontSize: "80px" }}
+            >
+              Your
             </Text>
           </div>{" "}
           <div className="text-4xl flex flex-row gap-2 items-center">
@@ -105,7 +108,8 @@ const HomePage = () => {
           title="Yield Analysis"
           image="./tree.jpg"
           className=""
-          link={"/analyze"}c
+          link={"/analyze"}
+          c
         />
       </div>
     </div>

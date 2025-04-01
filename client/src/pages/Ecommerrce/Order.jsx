@@ -8,23 +8,23 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
   const { authUser } = useAuthStore();
 
-  // Fetch orders from the API
+ 
   const fetchOrders = async () => {
     try {
       const res = await axios.post(
         "http://localhost:3000/api/Ecom/getOrders",
-        { userId: authUser._id }, // Send userId in the request body
+        { userId: authUser._id },
         { withCredentials: true }
       );
-      console.log(res.data);
-      setOrders(res.data.data); // Assuming the orders are in `data.data`
+      console.log("err", res.data);
+      setOrders(res.data.data); 
     } catch (error) {
       console.log("Error fetching orders: ", error.message);
     }
   };
 
   useEffect(() => {
-    fetchOrders(); // Fetch orders when the component mounts
+    fetchOrders(); 
   }, []);
 
   return (

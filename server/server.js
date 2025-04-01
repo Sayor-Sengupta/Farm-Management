@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.routes.js'
 import ecommerceRoutes from './routes/product.routes.js'
 import cropRouter from './routes/crop.routes.js'
 import soilRouter from "./routes/soil.routes.js";  
+import smsRouter from './routes/sms.routes.js'
 const app = express();
 
 dotenv.config();
@@ -20,6 +21,8 @@ app.use('/api/users',authRoutes)
 app.use('/api/Ecom',ecommerceRoutes)
 app.use('/api/crop',cropRouter)
 app.use("/api/soil", soilRouter); 
+app.use("/api/sms", smsRouter);
+
 
 app.listen(PORT, () => {
   connectMongoDb()

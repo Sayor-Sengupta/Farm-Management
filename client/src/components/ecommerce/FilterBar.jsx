@@ -31,9 +31,9 @@ const FilterBar = ({ onFilterChange }) => {
               className={`px-3 py-2 h-10 w-44 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${
                 selectedCategory === "fruits & vegetables" ? "bg-cyan-300" : ""
               }`}
-              onClick={() => handleCategoryClick("fruits & vegetables")}
+              onClick={() => handleCategoryClick("fruits")}
             >
-              Fruits & Vegetables
+              Fruits and Vegetables
             </h1>
             <h1
               className={`px-3 py-2 h-10 w-40 rounded-md flex flex-row gap-2 hover:bg-cyan-200 ${

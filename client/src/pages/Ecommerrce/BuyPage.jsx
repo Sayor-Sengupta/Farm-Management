@@ -4,7 +4,7 @@ import ItemCard from "@/components/ecommerce/ItemCard";
 import MessageSkeleton from "@/components/ecommerce/Skeleton";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+//import toast from "react-hot-toast";
 
 const BuyPage = () => {
   const [productList, setProductList] = useState([]);
@@ -18,7 +18,7 @@ const BuyPage = () => {
     try {
       const res = await axios.get(
         ` http://localhost:3000/api/Ecom/search?search=${query}`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       console.log(res.data);
       setProductList(res.data.data);
@@ -35,7 +35,7 @@ const BuyPage = () => {
       const res = await axios.post(
         "http://localhost:3000/api/Ecom/filter",
         { category: appliedFilters.category },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       console.log(res.data);
       setProductList(res.data.data);
@@ -100,7 +100,6 @@ const BuyPage = () => {
               />
             </svg>
           </label>
-          
         </div>
         <div className="flex flex-row gap-5 justify-center scrollbar scrollbar-thumb-rose-400 scrollbar-track-red-600 ">
           <div className="grid grid-cols-3 gap-1  w-[1000px]  mr-30 overflow-y-auto h-[calc(100vh-200px)] overflow-x-hidden scrollbar-thin scrollbar-thumb-rose-400 scrollbar-track-red-600">
@@ -131,7 +130,7 @@ const BuyPage = () => {
           </div>
           <div>
             {/* <FilterBar onFilterChange={handleFilterChange} /> */}
-            <FilterBar onFilterChange={handleFilterChange}  />
+            <FilterBar onFilterChange={handleFilterChange} />
           </div>
         </div>
       </div>

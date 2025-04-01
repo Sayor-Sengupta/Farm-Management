@@ -50,7 +50,7 @@ const SellCard = () => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
       toast.success("Product uploaded successfully");
       console.log("Product uploaded successfully:", response.data);

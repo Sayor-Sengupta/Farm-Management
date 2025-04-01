@@ -12,7 +12,7 @@ const ItemCard = ({ id, name, Price, image, originalPrice }) => {
       const res = await axios.post(
         "http://localhost:3000/api/Ecom/addToCart",
         {
-          productId: id, // Pass the product id
+          productId: id, 
         },
         { withCredentials: true }
       );
@@ -47,7 +47,7 @@ const ItemCard = ({ id, name, Price, image, originalPrice }) => {
         </a>
         <div className="mt-2 mb-5 flex items-center justify-between">
           <p>
-            <span className="text-3xl font-bold text-slate-900">${Price}</span>
+            <span className="text-3xl font-bold text-slate-900">Rs .{Price}</span>
             {originalPrice && (
               <span className="text-sm text-slate-900 line-through ml-2">
                 Rs.{originalPrice}
